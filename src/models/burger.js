@@ -16,6 +16,12 @@ const BurgerSchema = mongoose.Schema(
                 ref: 'Ingredient',
                 required: true
             }
+        ],
+        offers: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Offer'
+            }
         ]
     },
     {

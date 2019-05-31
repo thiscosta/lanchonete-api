@@ -10,6 +10,14 @@ const IngredientSchema = mongoose.Schema(
             type: Number,
             required: true
         },
+        default: {
+            type: Boolean,
+            required: true,
+            default: false
+        },
+        quantity: {
+            type: Number
+        }
     },
     {
         timestamps: true

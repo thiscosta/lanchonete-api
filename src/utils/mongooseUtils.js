@@ -7,7 +7,7 @@ const isValidObjectID = (str) => {
     return valid;
 }
 
-const documentExists = async (schema ,id) => {
+const documentExists = async (schema, id) => {
     const document = await schema.findById(id)
     return document ? true : false
 }
