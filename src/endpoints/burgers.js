@@ -17,7 +17,7 @@ class Burger {
             const errors = validationResult(req)
             if (!errors.isEmpty()) return res.status(422).json({ errors: errors.array() })
             const burger = await new Promise(async (resolve, reject) => {
-                let serviceResponse = await service.newBurguer(req.body, reject)
+                let serviceResponse = await service.newBurger(req.body, reject)
                 resolve(serviceResponse)
             }).catch(e => { return res.json({ error: true, message: e }) })
             return res.json(burger)
