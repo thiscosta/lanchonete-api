@@ -17,6 +17,10 @@ const IngredientSchema = mongoose.Schema(
         },
         quantity: {
             type: Number
+        },
+        burger: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Burger'
         }
     },
     {

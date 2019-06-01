@@ -1,5 +1,7 @@
 const Burgers = require('../models/burger')
 const { validationResult } = require('express-validator/check');
+const service = require('../services/burgerService')
+
 class Burger {
     async index(req, res) {
         try {
@@ -14,7 +16,11 @@ class Burger {
         try {
             const errors = validationResult(req)
             if (!errors.isEmpty()) return res.status(422).json({ errors: errors.array() })
-            return res.json({ error: false })
+            const burger = await new Promise(async (resolve, reject) => {
+                let serviceResponse = await service.newBurguer(req.body, reject)
+                resolve(serviceResponse)
+            }).catch(e => { return res.json({ error: true, message: e }) })
+            return res.json(burger)
         } catch (e) {
             return res.json({ error: true, message: e })
         }

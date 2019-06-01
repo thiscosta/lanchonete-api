@@ -11,6 +11,7 @@ const ingredientsFromBurger = [
             if (!isValidObjectID(ingredient._id)) throw new Error(`The id ${ingredient._id} isn't valid for ingredients`)
             let ingredientExists = await documentExists(Ingredients, ingredient._id)
             if (!ingredientExists) throw new Error(`The ingredient with id ${ingredient._id} doesn't exists`)
+            if (ingredient.default) throw new Error(`The ingredient with id ${ingredient._id} is default and cannot be used on burgers`)
             if (!ingredient.quantity || parseInt(ingredient.quantity) <= 0) throw new Error(`The ingredient with id ${ingredient._id} must have at least 1 unity`)
         })
         return true
