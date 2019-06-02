@@ -3,24 +3,34 @@ const Offers = require('../models/offer')
 const applyOffers = async (burger) => {
     burger.offers = []
     burger.discount = 0
-    await light(burger)
-    await meat(burger)
-    await cheese(burger)
+    let applyedOffer = false
+
+    applyedOffer = await light(burger)
+    if (applyedOffer) await applyOffer(burger, 'Light')
+
+    applyedOffer = await meat(burger)
+    if (applyedOffer) await applyOffer(burger, 'Muita carne')
+
+    applyedOffer = await cheese(burger)
+    if (applyedOffer) await applyOffer(burger, 'Muito queijo')
+
     burger.price = burger.price.toFixed(2)
+}
+
+const applyOffer = async (burger, offerName) => {
+    const offer = await Offers.findOne({ "name": offerName })
+    if (offer) burger.offers.push(offer)
 }
 
 const light = async (burger) => {
     const hasLettuce = item => item.name === 'Alface'
     const hasBacon = item => item.name === 'Bacon'
     if (burger.ingredients.find(hasLettuce) && !burger.ingredients.find(hasBacon)) {
-        const lightOffer = await Offers.findOne({ "name": "Light" })
         const discountAmount = burger.price / 10
-        burger.offers.push(lightOffer)
-        burger.price -= discountAmount
         burger.discount += discountAmount
-
+        return true
     }
-    return burger
+    return false
 }
 
 const meat = async (burger) => {
@@ -29,12 +39,10 @@ const meat = async (burger) => {
     if (meatIngredient && meatIngredient.quantity >= 3) {
         const discountQuantity = meatIngredient.quantity / 3 >> 0
         const discountAmount = discountQuantity * meatIngredient.price
-        const meatOffer = await Offers.findOne({ "name": "Muita carne" })
-        burger.offers.push(meatOffer)
-        burger.price -= discountAmount
         burger.discount += discountAmount
+        return true
     }
-    return burger
+    return false
 }
 
 const cheese = async (burger) => {
@@ -43,13 +51,11 @@ const cheese = async (burger) => {
     if (cheeseIngredient && cheeseIngredient.quantity >= 3) {
         const discountQuantity = cheeseIngredient.quantity / 3 >> 0
         const discountAmount = discountQuantity * cheeseIngredient.price
-        const cheeseOffer = await Offers.findOne({ "name": "Muito queijo" })
-        burger.offers.push(cheeseOffer)
-        burger.price -= discountAmount
         burger.discount += discountAmount
+        return true
     }
-    return burger
+    return false
 }
 
 
-module.exports = { applyOffers }
+module.exports = { applyOffers, light, meat, cheese }

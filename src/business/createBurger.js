@@ -45,4 +45,4 @@ const fillBurgerId = async (burger) => {
     })
 }
 
-module.exports = { createBurger }
+module.exports = { createBurger, calculatePrice }
