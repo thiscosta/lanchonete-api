@@ -6,22 +6,23 @@ const SaleItemSchema = mongoose.Schema(
             type: String,
             required: true
         },
-        burgers: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Burger',
-                required: true
-            }
-        ],
-        offers: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Offer'
-            }
-        ],
+        burger:
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Burger',
+            required: true
+        },
         sale: {
-            type: mongoose.Schema.Types.ObjectId, 
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'Sale',
+            required: true
+        },
+        quantity: {
+            type: Number,
+            required: true
+        },
+        price: {
+            type: Number,
             required: true
         }
     },

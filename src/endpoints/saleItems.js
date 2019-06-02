@@ -1,13 +1,11 @@
-const SaleItems = require('../models/sale')
+const SaleItems = require('../models/saleItem')
 
 class SaleItem {
 
     async index(req, res) {
         try {
-            const items = await SaleItems.find({
-                'sale': req.params.sale
-            })
-            return res.status(200).json(items)
+            const item = await SaleItems.find({ "sale": req.params.id }).populate('burger').populate('sale')
+            return res.json(item)
         } catch (e) {
             return res.json({ error: true, e })
         }
@@ -18,7 +16,7 @@ class SaleItem {
             const item = await SaleItems.find({
                 'sale': req.params.sale,
                 '_id': req.params.item
-            })
+            }).populate('burger').populate('sale')
             return res.status(200).json(item)
         } catch (e) {
             return res.json({ error: true, e })

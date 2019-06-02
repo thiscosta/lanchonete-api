@@ -3,14 +3,13 @@ const mongoose = require('mongoose')
 const SaleSchema = mongoose.Schema(
     {
         price: {
-            type: Number, 
+            type: Number,
             required: true
         },
         items: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'SaleItem',
-                required: true
             }
         ]
     },

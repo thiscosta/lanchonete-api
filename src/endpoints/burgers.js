@@ -5,7 +5,7 @@ const service = require('../services/burgerService')
 class Burger {
     async index(req, res) {
         try {
-            const burgers = await Burgers.find().populate('ingredients')
+            const burgers = await Burgers.find().populate('ingredients').populate('offers')
             return res.status(200).json(burgers)
         } catch (e) {
             return res.json({ error: true, message: e })
@@ -28,7 +28,7 @@ class Burger {
 
     async show(req, res) {
         try {
-            const burger = await Burgers.findById(req.params.id).populate('ingredients')
+            const burger = await Burgers.findById(req.params.id).populate('ingredients').populate('offers')
             return res.status(200).json(burger)
         } catch (e) {
             return res.json({ error: true, message: e })

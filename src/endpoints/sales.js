@@ -1,5 +1,6 @@
 const Sales = require('../models/sale')
 const { validationResult } = require('express-validator/check');
+const service = require('../services/saleService')
 
 class Sale {
 
@@ -16,7 +17,11 @@ class Sale {
         try {
             const errors = validationResult(req)
             if (!errors.isEmpty()) return res.status(422).json({ errors: errors.array() })
-            return res.json({ error: false })
+            const sale = await new Promise(async (resolve, reject) => {
+                let serviceResponse = await service.buy(req.body, reject)
+                resolve(serviceResponse)
+            }).catch(e => { return res.json({ error: true, message: e }) })
+            return res.json(sale)
         } catch (e) {
             return res.json({ error: true, e })
         }
