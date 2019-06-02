@@ -29,7 +29,7 @@ const fillSaleAndItems = async (sale, items) => {
 const createSaleItems = async (sale) => {
     await asyncForEach(sale.items, async item => {
         item.burger = await Burgers.findById(item.burger).populate('ingredients').populate('offers')
-        item.price = (item.burger.price * item.quantity).toFixed(2)
+        item.price = ((item.burger.price * item.quantity) - item.burger.discount).toFixed(2)
         item.name = item.quantity + ' - ' + item.burger.name
     })
     return sale.items

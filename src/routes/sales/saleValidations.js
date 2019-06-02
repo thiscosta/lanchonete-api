@@ -1,6 +1,5 @@
 const { check, body } = require('express-validator/check');
 const Burgers = require('../../models/burger')
-const Ingredients = require('../../models/ingredient')
 const { asyncForEach } = require('../../utils/asyncUtils')
 const { isValidObjectID, documentExists } = require('../../utils/mongooseUtils')
 

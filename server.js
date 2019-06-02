@@ -3,7 +3,6 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const requireDir = require('require-dir')
-const Offers = require('./src/models/offer')
 
 require('dotenv').config()
 
